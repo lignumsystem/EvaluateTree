@@ -23,7 +23,6 @@ Input tree is assumed to be a conifer, -deciduous changes it to deciduous. <br /
 > -foliageAreaMass   Evaluates foliage area (total in conifers, one-sided in deciduous) and mass and writes to console. If flag -byOrder is set writes also by Gravelius orders and total. If flag -noTitle only values are written <br />
 > -heights           Tree height and height of crown base (only conifer at the moment) <br />
 > -noCompartments    Number of TreeCompartment in different classes to console. <br />
-> -vizTree           LIGNUM visualization of tree. Leaves of deciduous tree shown as triangles. <br />
 > -fractalDimension  writes to console no. of occupied cubes as a function of cube size. That is; box counting. Shoot cylinders are covered with points that are used to test whether a cube is occupied. no_points specifies how many to cover a cylinder. Only for pines at the moment. <br />
 > -fractalDm <minbox>    minimum box side lentgth given as part of original box size. Default = 1000 meaning minimun side length is 1/1000 of original. <br />
 > -fractalD0 value     Starts d iteration from a given value = span/value span is written out when this program starts. <br />
