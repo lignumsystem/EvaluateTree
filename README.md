@@ -5,21 +5,21 @@ This project must reside under lignum-core, that is, in the directory lignum-cor
 Evaluatetree collects a number of short programs that either analyze of modify a Lignum tree. This collection has developed as a way to access/modify trees for various purposes. This is in a way a front end for the functors in lignum-core/stl-lignum/TreeFunctors.h (only a small part of them are used). <br />
 The tree is read from a xml file, default is conifer. If input tree is a deciduous one, Triangle is the leaf shape. Analyzing deciduous trees with other leaf shapes is not possible at the moment. Only a limited number analyses/actions are possible for deciduous trees. <br />
 
-Usage: ./evaluate  tree.xml [-deciduous] [-mantleArea value [-foliage] [-crown] [-sum] ] [-foliageAreaMass [-byOrder] [-noTitle]] <br />
-       [-heights] [-noCompartments] [-fractalDimension no_points [-fractalDm minbox] [-fractalD0 value] ] <br />
-       [-lacunarity box [-no_points number]] [-ellipsoid] [-randomizeShoots -Zc value -rh value -rv value] [-seed value]] <br />
-       [-woodyParts] [-bothEnds]] [-treeSegmentInformation] [-needlesLast] [-multWf10] [-foliageMassEqs [-noTitle]]  [-raumonen] [-raumonenB] <br />
-       [-sideBranches] [-STARvalues [-runs value] [-starFile name]] [-makeTree [-nShoot n] [-Rf value] [-len value] [-fol_den value]] <br />
-       [-moveTree [-X value] [-Y value] [-Z value]] [-segmentLengths [-byOrder] [-noTitle]] [-setRf value] <br />
-       [-monster] [-adjustWf] [-adjustSf] [-streit] [-countTreeSegments] [-simplify] <br />
-       [-separateTopShoots value [-secondSep value] ] [-displayStructure [-byAxis]] [-verticalLA [-step value] [-min value] [-max value] ] <br />
-       [-changeOrder value] [-setOrder [-iniVal value]] [-setWoodyZero [-Hc value] ] [-maxCrownWidth [-foliage]] [-collectSegmentLengths [-order value]] <br />
-       [-noBranchWhorls] [-meanBranchAngle] [-setSapwoodArea [-correctR]] [-printLastSegInfo] [-printStemDiameters] <br />
+              Usage: ./evaluate  tree.xml [-deciduous] [-mantleArea value [-foliage] [-crown] [-sum] ] [-foliageAreaMass [-byOrder] [-noTitle]] 
+       [-heights] [-noCompartments] [-fractalDimension no_points [-fractalDm minbox] [-fractalD0 value] ] 
+       [-lacunarity box [-no_points number]] [-ellipsoid] [-randomizeShoots -Zc value -rh value -rv value] [-seed value]] 
+       [-woodyParts] [-bothEnds]] [-treeSegmentInformation] [-needlesLast] [-multWf10] [-foliageMassEqs [-noTitle]]  [-raumonen] [-raumonenB] 
+       [-sideBranches] [-STARvalues [-runs value] [-starFile name]] [-makeTree [-nShoot n] [-Rf value] [-len value] [-fol_den value]] 
+       [-moveTree [-X value] [-Y value] [-Z value]] [-segmentLengths [-byOrder] [-noTitle]] [-setRf value] 
+       [-monster] [-adjustWf] [-adjustSf] [-streit] [-countTreeSegments] [-simplify]
+       [-separateTopShoots value [-secondSep value] ] [-displayStructure [-byAxis]] [-verticalLA [-step value] [-min value] [-max value] ] 
+       [-changeOrder value] [-setOrder [-iniVal value]] [-setWoodyZero [-Hc value] ] [-maxCrownWidth [-foliage]] [-collectSegmentLengths [-order value]] 
+       [-noBranchWhorls] [-meanBranchAngle] [-setSapwoodArea [-correctR]] [-printLastSegInfo] [-printStemDiameters] 
 
 
-Input tree is assumed to be a conifer, -deciduous changes it to deciduous. <br />
-> -mantleArea    evaluates surface area of trunk and branches without foliage by gravelius orders and writes to console. With -foliage also parts with foliage are included. <br />
->               If -crown is set, only mantle area of stemsegments inside crown are evaluated, segments order == value are evaluated, if -sum is set order >= value segments evaluated. <br />
+Input tree is assumed to be a conifer, -deciduous changes it to deciduous. <br/>
+> -mantleArea    evaluates surface area of trunk and branches without foliage by gravelius orders and writes to console. With -foliage also parts with foliage are included. <br/>
+>               If -crown is set, only mantle area of stemsegments inside crown are evaluated, segments order == value are evaluated, if -sum is set order >= value segments evaluated. <br/>
 > -foliageAreaMass   Evaluates foliage area (total in conifers, one-sided in deciduous) and mass and writes to console. If flag -byOrder is set writes also by Gravelius orders and total. If flag -noTitle only values are written <br />
 > -heights           Tree height and height of crown base (only conifer at the moment) <br />
 > -noCompartments    Number of TreeCompartment in different classes to console. <br />
