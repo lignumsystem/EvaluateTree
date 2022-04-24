@@ -2,8 +2,9 @@
 
 This project must reside under lignum-core, that is, in the directory lignum-core/
 
-Evaluatetree collects a number of short programs that either analyze of modify a Lignum tree. This collection has developed as a way to access/modify trees for various purposes. This is in a way a front end for the functors in lignum-core/stl-lignum/TreeFunctors.h (only a small part of them are used). <br />
-The tree is read from a xml file, default is conifer. If input tree is a deciduous one, Triangle is the leaf shape. Analyzing deciduous trees with other leaf shapes is not possible at the moment. Only a limited number analyses/actions are possible for deciduous trees. <br />
+Evaluatetree collects a number of short programs that either analyze of modify a Lignum tree. This collection has developed as a way to access/modify trees for various purposes. This is in a way a front end for the functors in lignum-core/stl-lignum/TreeFunctors.h (only a small part of them are used).
+
+The tree is read from a xml file, default is conifer. If input tree is a deciduous one, Triangle is the leaf shape. Analyzing deciduous trees with other leaf shapes is not possible at the moment. Only a limited number analyses/actions are possible for deciduous trees.
 
               Usage: ./evaluate  tree.xml [-deciduous] [-mantleArea value [-foliage] [-crown] [-sum] ] [-foliageAreaMass [-byOrder] [-noTitle]] 
        [-heights] [-noCompartments] [-fractalDimension no_points [-fractalDm minbox] [-fractalD0 value] ] 
