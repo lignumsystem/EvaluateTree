@@ -28,11 +28,10 @@ void Usage()
 {
   cout << endl;
   cout << "This program evaluates a number of things from a tree that is read in from the xml file." << endl;
-  cout << "If input tree is a deciduous one, Triangle is the leaf shape. Analyzing trees with other leaf" << endl;
-  cout << "shapes is not possible (without further programming) if foliage characteristcs are needed in the" << endl;
-  cout << "analysis." << endl;
+  cout << "If input tree is a deciduous one, Triangle is the default leaf shape. If -ellipse, the shape is" << endl;
+  cout << "ellipse. This is at the moment possible only for -moveTree" << endl;
   cout << endl;
-  cout << "Usage: ./evaluate  <tree.xml> [-deciduous] [-mantleArea <value> [-foliage] [-crown] [-sum] ]" << endl;
+  cout << "Usage: ./evaluate  <tree.xml> [-deciduous [-ellipse]] [-mantleArea <value> [-foliage] [-crown] [-sum] ]" << endl;
   cout << "       [-foliageAreaMass [-byOrder] [-noTitle]]" << endl;
   cout << "       [-heights] [-noCompartments]" << endl;
   cout << "       [-fractalDimension <no_points> [-fractalDm <minbox>] [-fractalD0 <value>] ]"<< endl;
@@ -165,12 +164,18 @@ int main(int argc, char** argv) {
 
   Tree<ETCfSegment,ETCfBud> conifer(Point(0,0,0.0),PositionVector(0,0,1));
   Tree<ETHwSegment,ETHwBud> deciduous(Point(0,0,0.0),PositionVector(0,0,1));
+  Tree<ETHwSegment_e,ETHwBud_e> deciduous_e(Point(0,0,0.0),PositionVector(0,0,1));
 
   bool is_conifer = true;
-  if(CheckCommandLine(argc,argv,"-deciduous"))
+  bool is_ellipse_leaf = false;
+  if(CheckCommandLine(argc,argv,"-deciduous")) {
     is_conifer = false;
+  }
+  if(CheckCommandLine(argc,argv,"-ellipse")) {
+    is_ellipse_leaf = true;
+  }
 
-    string tree_file = argv[1];
+  string tree_file = argv[1];
 
   if(!CheckCommandLine(argc,argv,"-makeTree")) {
     if(is_conifer) {
@@ -178,11 +183,44 @@ int main(int argc, char** argv) {
       tree_reader.readXMLToTree(conifer, tree_file);
     }
     else {
-      XMLDomTreeReader<ETHwSegment,ETHwBud,Triangle> tree_reader;
-      tree_reader.readXMLToTree(deciduous, tree_file);
+      if(!is_ellipse_leaf) {
+	XMLDomTreeReader<ETHwSegment,ETHwBud,Triangle> tree_reader;
+	tree_reader.readXMLToTree(deciduous, tree_file);
+      } else {
+	XMLDomTreeReader<ETHwSegment_e,ETHwBud_e,Ellipse> tree_reader;
+	tree_reader.readXMLToTree(deciduous_e, tree_file);
+      }
     }
-  }
 
+    //Set tree position and direction (= those of the first segment) to
+    //correspond to the actual ones
+    if(is_conifer) {
+      Axis<ETCfSegment,ETCfBud>& axis = GetAxis(const_cast<Tree<ETCfSegment,ETCfBud>&>(conifer));
+      list<TreeCompartment<ETCfSegment,ETCfBud>*>& ls = GetTreeCompartmentList(axis);
+      if (ls.size()>= 1){//one bud or the first segment
+	SetPoint(conifer, GetPoint(*ls.front()));
+	SetDirection(conifer, GetDirection(*ls.front()));
+      }
+    }
+    else {
+      if(!is_ellipse_leaf) {
+	Axis<ETHwSegment,ETHwBud>& axis = GetAxis(const_cast<Tree<ETHwSegment,ETHwBud>&>(deciduous));
+	list<TreeCompartment<ETHwSegment,ETHwBud>*>& ls = GetTreeCompartmentList(axis);
+	if (ls.size()>= 1){//one bud or the first segment
+	  SetPoint(deciduous, GetPoint(*ls.front()));
+	  SetDirection(deciduous, GetDirection(*ls.front()));
+	}
+      } else {
+	Axis<ETHwSegment_e,ETHwBud_e>& axis = GetAxis(const_cast<Tree<ETHwSegment_e,ETHwBud_e>&>(deciduous_e));
+	list<TreeCompartment<ETHwSegment_e,ETHwBud_e>*>& ls = GetTreeCompartmentList(axis);
+	if (ls.size()>= 1){//one bud or the first segment
+	  SetPoint(deciduous_e, GetPoint(*ls.front()));
+	  SetDirection(deciduous_e, GetDirection(*ls.front()));
+	}
+      }
+    }
+  
+  }
 
   //==========================================================================
   //
@@ -886,7 +924,7 @@ bool foliage = false;
 
     XMLDomTreeWriter<ETCfSegment,ETCfBud> writer;
     writer.writeTreeToXML(conifer, "simple.xml");
-
+  
 
     exit(0);
   }
@@ -900,7 +938,7 @@ bool foliage = false;
   if(CheckCommandLine(argc,argv,"-moveTree")) {
     Point p(0.0, 0.0, 0.0);
     if(ParseCommandLine(argc,argv,"-X",cla)) {
-      p.setX(-atoi(cla.c_str()));
+      p.setX(atoi(cla.c_str()));
     }
     if(ParseCommandLine(argc,argv,"-Y",cla)) {
       p.setY(atoi(cla.c_str()));
@@ -910,13 +948,22 @@ bool foliage = false;
     }
 
     if(is_conifer) {
-      MoveTree<ETCfSegment,ETCfBud> move(p-GetPoint(conifer), conifer);
+      Point mov = p-GetPoint(conifer);
+      MoveTree<ETCfSegment,ETCfBud> move(mov, conifer);
       ForEach(conifer, move);
     } else {
-      MoveTree<ETHwSegment,ETHwBud> move(p-GetPoint(deciduous), deciduous);
-      ForEach(deciduous, move);
+      if(!is_ellipse_leaf) {
+	Point mov = p-GetPoint(deciduous);
+	MoveHwTree<ETHwSegment,ETHwBud,Triangle> move(mov, deciduous);
+	ForEach(deciduous, move);
+      } else {
+	Point mov = p-GetPoint(deciduous_e);
+	MoveHwTree<ETHwSegment_e,ETHwBud_e,Ellipse> move(mov,deciduous_e);
+	ForEach(deciduous_e, move);
+      }
     }
- 
+
+    
     // iterator to find the . position in the filename
     std::string::iterator beg = std::find(tree_file.begin(), tree_file.end(), '.'); 
     // iterator to find all the characters from . till the end of file
@@ -924,6 +971,22 @@ bool foliage = false;
     string end_string = "_move.xml"; 
     tree_file.replace(beg, end, end_string);
 
+
+    if(is_conifer) {
+      XMLDomTreeWriter<ETCfSegment,ETCfBud> writer;
+      writer.writeTreeToXML(conifer, tree_file);
+
+    } else {
+      if(!is_ellipse_leaf) {
+	XMLDomTreeWriter<ETHwSegment,ETHwBud, Triangle> writer;
+	writer.writeTreeToXML(deciduous, tree_file);
+      } else {
+	XMLDomTreeWriter<ETHwSegment_e,ETHwBud_e,Ellipse> writer;
+	writer.writeTreeToXML(deciduous_e, tree_file);
+      }
+    }
+
+    
     XMLDomTreeWriter<ETCfSegment,ETCfBud> writer;
     writer.writeTreeToXML(conifer, tree_file);
 
@@ -1525,7 +1588,7 @@ bool foliage = false;
     cout << "Tree  to file sapwoodarea.xml" << endl;
 
     exit(0);
- }
+  }
 
 
  if(CheckCommandLine(argc,argv,"-printStemDiameters")) {
@@ -1536,5 +1599,6 @@ bool foliage = false;
 
    exit(0);
  }
+
 
 }

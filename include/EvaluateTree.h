@@ -13,6 +13,7 @@
 
 class ETCfBud;
 class ETHwBud;
+class ETHwBud_e;
 
 class ETCfSegment : public CfTreeSegment<ETCfSegment,ETCfBud>{
  public:
@@ -38,6 +39,15 @@ class ETHwSegment : public HwTreeSegment<ETHwSegment,ETHwBud,Triangle>{
     {}
 };
 
+class ETHwSegment_e : public HwTreeSegment<ETHwSegment_e,ETHwBud_e,Ellipse>{
+ public:
+ ETHwSegment_e(const Point& p,const PositionVector& pv,
+                     const LGMdouble go,const METER l, const METER r,
+                     const METER rn, Tree<ETHwSegment_e,ETHwBud_e>* tree)
+   :HwTreeSegment<ETHwSegment_e,ETHwBud_e,Ellipse>(p,pv,go,l,r,rn,tree)
+    {}
+};
+
 class ETCfBud:public Bud<ETCfSegment,ETCfBud>{
  public:
  ETCfBud(const Point& p, const PositionVector& d, 
@@ -51,6 +61,14 @@ class ETHwBud:public Bud<ETHwSegment,ETHwBud>{
              const LGMdouble go, Tree<ETHwSegment,ETHwBud>* tree)
    :Bud<ETHwSegment,ETHwBud>(p,d,go,tree){}
 };
+
+class ETHwBud_e:public Bud<ETHwSegment_e,ETHwBud_e>{
+ public:
+ ETHwBud_e(const Point& p, const PositionVector& d, 
+             const LGMdouble go, Tree<ETHwSegment_e,ETHwBud_e>* tree)
+   :Bud<ETHwSegment_e,ETHwBud_e>(p,d,go,tree){}
+};
+
 
 
 #endif

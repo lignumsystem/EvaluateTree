@@ -22,6 +22,7 @@ class a_info {
     for(int i = 0; i < (add_this.Qvs).size(); i++) {
       Qvs.push_back((add_this.Qvs)[i]);
     }
+
   }
   int n_fork;
   vector<double> orders;
