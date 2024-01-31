@@ -53,7 +53,8 @@ void Usage()
   cout << "       [-noBranchWhorls] [-meanBranchAngle] [-setSapwoodArea [-correctR]]" << endl;
   cout << "       [-printLastSegInfo] [-printStemDiameters]" << endl;
   cout << endl;
-  cout << "Input tree is assumed to be a conifer, -deciduous changes it to deciduous." << endl;
+  cout << "Input tree is assumed to be a conifer, -deciduous changes it to deciduous. Triangle is the default" << endl;
+  cout << "               leaf shape, -ellipse changes it to Ellipse." << endl;
   cout << "-mantleArea    evaluates surface area of trunk and branches without foliage by gravelius orders" << endl;
   cout << "               and writes to console. With -foliage also parts with foliage are included." << endl;
   cout << "               If -crown is set, only mantle area of stemsegments inside crown are evaluated," << endl;

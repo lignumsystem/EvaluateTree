@@ -19,7 +19,7 @@ Moving a tree (-moveTree) works now also with deciduous trees using either Triag
        [-noBranchWhorls] [-meanBranchAngle] [-setSapwoodArea [-correctR]] [-printLastSegInfo] [-printStemDiameters] 
 
 
-Input tree is assumed to be a conifer, -deciduous changes it to deciduous. <br/>
+Input tree is assumed to be a conifer, -deciduous changes it to deciduous with Triangle leaf shape. -ellipse changess it Ellipse.<br/>
 + -mantleArea    evaluates surface area of trunk and branches without foliage by gravelius orders and writes to console. 
   + With -foliage also parts with foliage are included. 
   + If -crown is set, only mantle area of stemsegments inside crown are evaluated, segments order == value are evaluated
